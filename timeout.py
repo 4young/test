@@ -7,5 +7,5 @@ try:
   res = requests.get(target + ':' + port, timeout = 5)
   print(res.text)
 except RequestException:
-  print("[!]RequestException:timeout")
+  print("[-]RequestException:timeout")
     
