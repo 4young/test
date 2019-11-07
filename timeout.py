@@ -1,6 +1,6 @@
 import requests
 from requests.exceptions import RequestException
-target = "http://219.166.7.50"
+target = "http://127.0.0.1"
 port = "80"
 print("%s:%s"%(target,port))
 try:
