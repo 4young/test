@@ -1,3 +1,6 @@
+##Local File Inclusion
+##https://www.exploit-db.com/exploits/30085
+
 #coding=utf8
 import requests
 import sys
